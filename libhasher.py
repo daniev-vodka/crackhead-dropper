@@ -50,15 +50,6 @@ def obfuscate_pe(input_path, output_path):
         else:
             print("[*] No import directory found.")
 
-        # ------------------------------------------------------------
-        # IMPORTANT:
-        #
-        # Do NOT overwrite IMAGE_IMPORT_BY_NAME strings.
-        #
-        # Windows needs these strings when resolving the executable's
-        # imports. Replacing them with hashes makes the PE unloadable
-        # unless a custom runtime import resolver is present.
-        # ------------------------------------------------------------
 
         print("[*] Changing section names...")
 
@@ -76,14 +67,6 @@ def obfuscate_pe(input_path, output_path):
         # Generate the PE while preserving its actual structures.
         raw_pe_bytes = pe.write()
 
-        # ------------------------------------------------------------
-        # Append an overlay.
-        #
-        # Data appended after the PE's normal image is not mapped as
-        # executable memory and therefore does not interfere with the
-        # normal PE loader.
-        # ------------------------------------------------------------
-
         junk_size = random.randint(1024, 4096)
 
         print(
@@ -98,9 +81,9 @@ def obfuscate_pe(input_path, output_path):
 
         print(f"[+] Written: {output_path}")
 
-        # ------------------------------------------------------------
+ 
         # Re-open the resulting file to make sure pefile can parse it.
-        # ------------------------------------------------------------
+
 
         print("[*] Validating resulting PE...")
 
