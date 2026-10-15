@@ -7,7 +7,7 @@ from Crypto.Util.Padding import pad
 def encrypt_payload(input_filename, output_filename, raw_key, iv_bytes):
     # 1. Read the raw shellcode bytes
     if not os.path.exists(input_filename):
-        print(f"[-] Error: {input_filename} not found. Run your msfvenom command first.")
+        print(f"[-] Error: {input_filename} not found.")
         return
         
     with open(input_filename, "rb") as f:
@@ -32,9 +32,9 @@ def encrypt_payload(input_filename, output_filename, raw_key, iv_bytes):
     print(f"[+] Encrypted payload successfully saved to: {output_filename}")
     print(f"[*] Encrypted File Size: {len(encrypted_data)} bytes\n")
 
-    # 6. Print out the exact formatting to copy-paste into your C++ dropper source code
+    # 6. output
     print("// ========================================================")
-    print("// COPY AND PASTE THESE INTO YOUR C++ DROPPER SOURCE CODE:")
+    print("// KEYS ARE NOW READY!!!!!!!!!!!!!:")
     print("// ========================================================")
     
     c_iv = ", ".join(f"0x{b:02x}" for b in iv_bytes)
@@ -49,7 +49,7 @@ if __name__ == "__main__":
     INPUT_FILE = "runcalcshellcode.bin"
     OUTPUT_FILE = "runcalcshellcode.enc" 
     
-    MY_PASSWORD = b"SuperSecretPassKey123!" 
+    MY_PASSWORD = b"password!" 
     MY_IV = b"\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f"
 
     encrypt_payload(INPUT_FILE, OUTPUT_FILE, MY_PASSWORD, MY_IV)
